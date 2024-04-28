@@ -60,7 +60,7 @@ const Header = () => {
             <li>
               <Link
                 className="bg-white text-[#990707] px-4 py-1 my-1 font-bold block rounded-full text-center"
-                href="#"
+                href="/login"
               >
                 تسجيل الدخول
               </Link>
