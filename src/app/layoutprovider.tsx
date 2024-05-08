@@ -1,7 +1,10 @@
 'use client'
 
+import Footer from '@/component/footer';
+import Header from '@/component/header';
 // Use usePathname for catching route name.
 import { usePathname } from 'next/navigation';
+const url : string [] = ["/login" , "/resetpass" , "/setnewpass" , "/signup" , "/verification"]
 const LayoutProvider = ({
     children,
   }: Readonly<{
@@ -10,8 +13,9 @@ const LayoutProvider = ({
     const pathname = usePathname();
     return (
         <>
-            {/* {pathname === "/login" && <h1>Welcome to Posts page!</h1>} */}
+            {!url.includes(pathname)  && <Header/> }
             {children}
+            {!url.includes(pathname)  && <Footer/> }
         </>
     )
 };

@@ -1,4 +1,4 @@
-import Content from "../../component/content";
+import Content from "@/component/content";
 export default function Signup() {
   return (
     <div className="flex h-screen bg-[#0c243b]">

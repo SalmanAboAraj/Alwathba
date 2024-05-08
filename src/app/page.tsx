@@ -6,7 +6,6 @@ export default function HomePage() {
   const images = ["/slider/1.jpg", "/slider/2.jpg", "/slider/3.jpg"];
   return (
     <div>
-    <Header/>
     <ImageSlider/>
     <Footer/>
     </div>
