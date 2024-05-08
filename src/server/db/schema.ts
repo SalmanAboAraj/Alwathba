@@ -1,5 +1,5 @@
 import exp from "constants";
-import { relations, sql } from "drizzle-orm";
+import { InferModel, relations, sql } from "drizzle-orm";
 import {
   boolean,
   date,
@@ -21,11 +21,11 @@ export const createTable = pgTableCreator((name) => `demo_${name}`);
 
 export const user = createTable("user", {
   id: serial("id").primaryKey(),
-  roleId: smallint("roleid").notNull(),
+  roleId: smallint("roleid").notNull().default(1),
   Fname: varchar("Fname", { length: 256 }).notNull(),
   Lname: varchar("Lname", { length: 256 }).notNull(),
   gender: boolean("gender").notNull(),
-  blocked: boolean("blocked").notNull(),
+  blocked: boolean("blocked").notNull().default(false),
   email: varchar("email", { length: 256 }).notNull().unique(),
   mobile: varchar("mobile", { length: 10 }).notNull().unique(),
   password: varchar("password", { length: 256 }).notNull(),
