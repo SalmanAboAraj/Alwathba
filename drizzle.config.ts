@@ -7,7 +7,7 @@ export default {
   out: "./drizzle",
   driver: "pg",
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    connectionString: env.DATABASE_URL as string,
   },
   tablesFilter: ["demo_*"],
 } satisfies Config;

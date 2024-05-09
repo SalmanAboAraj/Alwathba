@@ -1,12 +1,9 @@
-import exp from "constants";
-import { InferModel, relations, sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   date,
-  index,
   integer,
   pgTableCreator,
-  primaryKey,
   serial,
   smallint,
   smallserial,
@@ -14,8 +11,8 @@ import {
   time,
   timestamp,
   varchar,
+  primaryKey,
 } from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
 
 export const createTable = pgTableCreator((name) => `demo_${name}`);
 

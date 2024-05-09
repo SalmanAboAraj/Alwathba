@@ -5,7 +5,6 @@ import Header from "../../component/header"
 import Footer from "../../component/footer";
 export default function Home() {
     return (<div className="flex flex-col gap-5 bg-[#0c243b]">
-        <Header/>
         <div className="flex bg-[#0c243b]">
           
         <div className="bg-[#0c243b] text-white flex">
@@ -47,6 +46,5 @@ export default function Home() {
   </div>
 </div>
 </div>
-<Footer/>
         </div>)
         }

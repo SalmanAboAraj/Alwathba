@@ -1,12 +1,9 @@
-import Image from "next/image";
-import bgCard from "../../../public/Logo.jpg";
 import Header from "../../component/header"
 import Footer from "../../component/footer";
 export default function Home() {
   return (
     <>
     <div className="bg-[#0c243b] flex flex-col justify-center" dir="rtl">
-    <Header/>
       <div className="bg-[#0c243b] flex justify-center h-screen " dir="rtl">
         <div className="rounded-lg border bg-card text-card-foreground shadow-sm w-[60%] h-[80%] m-auto   ">
           <div className="flex flex-col space-y-1.5 p-6">
@@ -90,7 +87,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-<Footer/>
 </div>
     </>
   );

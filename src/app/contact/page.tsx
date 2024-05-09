@@ -4,7 +4,6 @@ export default function Home() {
     return (
       
 <div className="bg-[#0c243b] flex flex-col content-stretch ">
-<Header/>
 <div className="flex justify-center py-10 h-screen ">
   <div className="rounded-lg border text-card-foreground shadow-sm w-[800px] bg-white p-8" data-v0-t="card">
     <div className="flex flex-col space-y-1.5 p-6 text-right">
@@ -76,6 +75,5 @@ export default function Home() {
     </div>
   </div>
 </div>
-<Footer/>
 </div>    )
     }

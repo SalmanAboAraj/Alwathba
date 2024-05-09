@@ -1,5 +1,3 @@
-import Footer from "@/component/footer";
-import Header from "@/component/header";
 import ImageSlider from "@/component/imageSlider";
 
 export default function HomePage() {

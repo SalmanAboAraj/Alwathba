@@ -40,23 +40,7 @@ export const authOptions: NextAuthOptions = {
     }),
   },
   adapter: DrizzleAdapter(db, createTable) as Adapter,
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "email", type: "text", placeholder: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        try {
-          await db
-            .select()
-            .from(user)
-            .where(eq(user.email, credentials?.email));
-        } catch (error) {}
-      },
-    }),
-  ],
+  providers: [],
 };
 
 /**
