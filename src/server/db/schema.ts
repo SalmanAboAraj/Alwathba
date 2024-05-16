@@ -18,7 +18,10 @@ export const createTable = pgTableCreator((name) => `demo_${name}`);
 
 export const user = createTable("user", {
   id: serial("id").primaryKey(),
-  roleId: smallint("roleid").notNull().default(1),
+  roleId: smallint("roleid")
+    .notNull()
+    .default(1)
+    .references(() => role.id),
   Fname: varchar("Fname", { length: 256 }).notNull(),
   Lname: varchar("Lname", { length: 256 }).notNull(),
   gender: boolean("gender").notNull(),
@@ -359,7 +362,9 @@ export const productRelations = relations(product, ({ many }) => ({
 
 export const productMedia = createTable("productMedia", {
   id: serial("id").primaryKey(),
-  productId: integer("productId").notNull(),
+  productId: integer("productId")
+    .notNull()
+    .references(() => product.id),
   imagePath: varchar("imagePath", { length: 256 }).notNull(),
 });
 
@@ -372,9 +377,15 @@ export const productMediaRelations = relations(productMedia, ({ one }) => ({
 
 export const productClassification = createTable("productClassification", {
   id: serial("id").primaryKey(),
-  productId: integer("productId").notNull(),
-  classificationId: smallint("classificationId").notNull(),
-  sizeId: smallint("sizeId").notNull(),
+  productId: integer("productId")
+    .notNull()
+    .references(() => product.id),
+  classificationId: smallint("classificationId")
+    .notNull()
+    .references(() => classification.id),
+  sizeId: smallint("sizeId")
+    .notNull()
+    .references(() => size.id),
 });
 
 export const productClassificationRelations = relations(
