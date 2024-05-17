@@ -48,7 +48,6 @@ export async function POST(req: NextRequest) {
       userId: Number(formData.get("userId")),
       imagePath: fileUrl,
     };
-    // Save to database using Drizzle
     const createImage = await db.insert(userMedia).values(userMediaRow);
 
     return NextResponse.json({ user: createImage });
