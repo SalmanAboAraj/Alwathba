@@ -1,12 +1,21 @@
 import { db } from "@/server/db";
-import { userMedia } from "@/server/db/schema";
-import mime from "mime";
+import { comment, commentMedia } from "@/server/db/schema";
 import { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
+import mime from "mime";
 
-export async function POST(req: NextRequest) {
-  const formData = await req.formData();
+const takeUniqueOrThrow = <T extends any[]>(values: T): T[number] => {
+  if (values.length !== 1)
+    throw new Error("Found non unique or inexistent value");
+  return values[0]!;
+};
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const formData = await request.formData();
   const image = formData.get("imagePath") as File;
   const buffer = Buffer.from(await image.arrayBuffer());
   const now = new Date();
@@ -15,7 +24,7 @@ export async function POST(req: NextRequest) {
     month: "2-digit",
     year: "numeric",
   });
-  const relativeUploadDir = `/uploads/${formattedDate.replace(/[\/\\]/g, "-")}`;
+  const relativeUploadDir = `/commentmedia/${formattedDate.replace(/[\/\\]/g, "-")}`;
 
   const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
@@ -35,8 +44,14 @@ export async function POST(req: NextRequest) {
       );
     }
   }
-
   try {
+    const postId = parseInt(params.id, 10);
+
+    const commentRow = {
+      userId: formData.get("userId") as unknown as number,
+      postId: postId,
+      content: formData.get("content") as string,
+    };
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     const filename = `${image.name.replace(
       /\.[^/.]+$/,
@@ -44,15 +59,21 @@ export async function POST(req: NextRequest) {
     )}-${uniqueSuffix}.${mime.getExtension(image.type)}`;
     await writeFile(`${uploadDir}/${filename}`, buffer);
     const fileUrl = `${relativeUploadDir}/${filename}`;
-    const userMediaRow = {
-      userId: Number(formData.get("userId")),
+
+    const newcomment = await db
+      .insert(comment)
+      .values(commentRow)
+      .returning({ id: comment.id })
+      .then(takeUniqueOrThrow);
+    const newId = newcomment;
+    const commentMediaRow = {
+      commentId: newId.id,
       imagePath: fileUrl,
     };
-    const createImage = await db.insert(userMedia).values(userMediaRow);
-
-    return NextResponse.json({ user: createImage });
+    await db.insert(commentMedia).values(commentMediaRow);
+    return NextResponse.json({ message: "Comment created successfully" });
   } catch (e) {
-    console.error("Error while trying to upload a file\n", e);
+    console.error("Error while trying to update user information\n", e);
     return NextResponse.json(
       { error: "Something went wrong." },
       { status: 500 },
