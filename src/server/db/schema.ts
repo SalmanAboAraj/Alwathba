@@ -148,7 +148,7 @@ export const matchStateRelations = relations(matchState, ({ many }) => ({
 }));
 
 export const team = createTable("team", {
-  id: smallserial("id").primaryKey(),
+  id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull().unique(),
   logoPath: varchar("logoPath", { length: 256 }).notNull(),
 });
