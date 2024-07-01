@@ -8,6 +8,13 @@
       "when": 1715877567741,
       "tag": "0000_motionless_anthem",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1719853473243,
+      "tag": "0001_giant_mikhail_rasputin",
+      "breakpoints": true
     }
   ]
 }

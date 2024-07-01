@@ -1,0 +1,1 @@
+ALTER TABLE "demo_team" ALTER COLUMN "id" SET DATA TYPE serial;
