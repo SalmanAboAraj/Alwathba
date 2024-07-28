@@ -8,9 +8,9 @@ import { eq } from "drizzle-orm";
 import fs from "fs";
 
 const takeUniqueOrThrow = <T extends any[]>(values: T): T[number] => {
-  if (values.length !== 1)
-    throw new Error("Found non unique or inexistent value");
-  return values[0]!;
+  if (values.length === 1) {
+    return values[0]!;
+  }
 };
 
 // return imagepath from userMedia table using get
