@@ -1,6 +1,44 @@
+'use client'
 import Link from "next/link";
+import { useState } from "react";
+import {useRouter} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const SetNewPass = () => {
+  const pathname = usePathname();
+  const token=pathname.replace('/resetpass/', '')
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter()
+  async function handleSignup (){
+    if(password === confirmPassword){
+      try {
+        const data = {
+          "password":password,
+        }
+        const response = await fetch(`/api/setnewpass/${token}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        console.log(response);
+        if (!response.ok) {
+          throw new Error('There was an error sending the reset password email.');
+        }
+  
+        // Show success message and possibly redirect
+        else {
+          router.push('/login')
+        }
+        // Optionally, redirect to the login page or a page that says 'Check your email'
+      } catch (error: any) {
+        console.log(error);
+        
+      }
+  }
+}
     return (
       <>
         <div className="flex h-screen bg-[#0c243b]">
@@ -12,14 +50,17 @@ const SetNewPass = () => {
               <input
                 className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full text-right text-black"
                 placeholder="كلمة المرور الجديدة"
+                onChange={(e)=>{setPassword(e.target.value)}}
               />
               <input
                 className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full text-right text-black"
                 placeholder="تأكيد كلمة المرور"
+                onChange={(e)=>{setConfirmPassword(e.target.value)}}
               />
             </div>
             <Link href={'/login'}>
-            <button className="inline-flex mt-4 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#990707] hover:bg-red-600 text-white">
+            <button className="inline-flex mt-4 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#990707] hover:bg-red-600 text-white"
+            onClick={handleSignup}>
               تأكيد
             </button>     
             </Link>     

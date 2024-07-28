@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS "demo_size" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "demo_team" (
-	"id" "smallserial" PRIMARY KEY NOT NULL,
+	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
 	"logoPath" varchar(256) NOT NULL,
 	CONSTRAINT "demo_team_name_unique" UNIQUE("name")
@@ -153,6 +153,8 @@ CREATE TABLE IF NOT EXISTS "demo_user" (
 	"mobile" varchar(10) NOT NULL,
 	"password" varchar(256) NOT NULL,
 	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	"emailResetPassword" varchar(256) DEFAULT NULL,
+	"tokenCreatedAt" timestamp DEFAULT NULL,
 	CONSTRAINT "demo_user_email_unique" UNIQUE("email"),
 	CONSTRAINT "demo_user_mobile_unique" UNIQUE("mobile")
 );

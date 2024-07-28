@@ -1,11 +1,24 @@
 // import Image from "next/image";
 "use client";
 import Link from "next/link";
-export default function Home() {
-  // const searchParams = useSearchParams()
-  // if(searchParams.has('success')){
-  //   alert("تم تحديث كلمة المرور بنجاح")
-  // }
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+export default  function Home() {
+  const searchParams = useSearchParams();
+  const callBackUrl = searchParams.get("callbackUrl");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async () => {
+      const res = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: true,
+        callbackUrl:  callBackUrl ? callBackUrl : "/",
+      });
+      console.log("Submitted...", res);
+    
+  };
   return (
     <div className="flex h-screen bg-[#0c243b]">
       <div className="m-auto w-full max-w-md p-8 bg-[#2c3e50] rounded-lg">
@@ -24,6 +37,7 @@ export default function Home() {
             id="email"
             placeholder="أدخل رقمك أو بريدك الإلكتروني"
             type="text"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -37,6 +51,7 @@ export default function Home() {
             className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full text-right text-black"
             placeholder="أدخل كلمة المرور"
             type="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="mb-6 flex items-center justify-between">
@@ -56,7 +71,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#990707] hover:bg-red-600 text-white">
+        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#990707] hover:bg-red-600 text-white" onClick={handleSubmit}>
           تسجيل الدخول
         </button>
         <p className="mt-6 text-center text-sm text-gray-300">

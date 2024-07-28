@@ -1,5 +1,5 @@
 {
-  "id": "749e32b4-5789-462b-b541-663e27dea9f4",
+  "id": "96076daa-6826-440d-a216-d91888d04dc7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -954,7 +954,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "smallserial",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -1050,6 +1050,20 @@
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
+        },
+        "emailResetPassword": {
+          "name": "emailResetPassword",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "NULL"
+        },
+        "tokenCreatedAt": {
+          "name": "tokenCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "NULL"
         }
       },
       "indexes": {},

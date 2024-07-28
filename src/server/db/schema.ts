@@ -32,6 +32,10 @@ export const user = createTable("user", {
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  emailResetPassword: varchar("emailResetPassword", { length: 256 }).default(
+    sql`NULL`,
+  ),
+  tokenCreatedAt: timestamp("tokenCreatedAt").default(sql`NULL`),
 });
 
 export const userRelations = relations(user, ({ one, many }) => ({
