@@ -22,7 +22,7 @@ export const POST = async (request: NextRequest) => {
       .where(eq(user.email, email))
       .then(takeUniqueOrThrow);
     const passwordResetToken = uuidv4();
-    userreq.emailResetPassword = passwordResetToken;
+    userreq.resetPasswordToken = passwordResetToken;
     userreq.tokenCreatedAt = new Date();
     await db.update(user).set(userreq).where(eq(user.email, email));
     await sendPasswordResetEmail(email, passwordResetToken);

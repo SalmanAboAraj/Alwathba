@@ -37,7 +37,7 @@ const Content = () => {
   
         // Show success message and possibly redirect
         else {
-          router.push('/login')
+         router.push('/checkemail')
         }
         // Optionally, redirect to the login page or a page that says 'Check your email'
       } catch (error: any) {

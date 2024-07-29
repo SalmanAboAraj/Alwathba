@@ -15,18 +15,21 @@ export const GET = async (request: NextRequest, res: NextResponse) => {
     const userData = await db
       .select()
       .from(user)
-      .where(eq(user.resetPasswordToken, token))
+      .where(eq(user.verificationToken, token))
       .then(takeUniqueOrThrow);
-    const tokenCreatedAt = userData.tokenCreatedAt as Date;
-    const expired = tokenCreatedAt < new Date(Date.now() - 1000 * 60 * 10);
+    const verificationTokenCreationAt =
+      userData.verificationTokenCreationAt as Date;
+    const expired =
+      verificationTokenCreationAt < new Date(Date.now() - 1000 * 60 * 10);
 
     if (!expired) {
-      return NextResponse.redirect(
-        process.env.NEXTAUTH_URL + "/resetpass/" + token,
-        {
-          status: 307,
-        },
-      );
+      await db
+        .update(user)
+        .set({ verificated: true })
+        .where(eq(user.verificationToken, token));
+      return NextResponse.redirect(process.env.NEXTAUTH_URL + "/verification", {
+        status: 307,
+      });
     } else {
       return new Response("Password reset token is invalid or has expired.", {
         status: 400,
