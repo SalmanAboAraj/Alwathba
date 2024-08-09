@@ -32,7 +32,7 @@ export const user = createTable("user", {
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  resetPasswordToken: varchar("emailResetPassword", { length: 256 }).default(
+  resetPasswordToken: varchar("resetPasswordToken", { length: 256 }).default(
     sql`NULL`,
   ),
   tokenCreatedAt: timestamp("tokenCreatedAt").default(sql`NULL`),

@@ -10,12 +10,19 @@ const LayoutProvider = ({
   }: Readonly<{
     children: React.ReactNode;
   }>) => {
+    let vaild = true;
     const pathname = usePathname();
+    for (let i = 0; i < url.length; i++) {
+      
+      if (pathname.includes(url[i] as string)) {
+        vaild = false;
+      }
+  }
     return (
         <>
-            {!url.includes(pathname)  && <Header/> }
+            {vaild && <Header/> }
             {children}
-            {!url.includes(pathname)  && <Footer/> }
+            {vaild  && <Footer/> }
         </>
     )
 };

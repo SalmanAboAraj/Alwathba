@@ -17,7 +17,13 @@ export default  function Home() {
         callbackUrl:  callBackUrl ? callBackUrl : "/",
       });
       console.log("Submitted...", res);
-    
+      // const response = await fetch('/api/authmobile', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({email: email, password: password}),
+      // });
   };
   return (
     <div className="flex h-screen bg-[#0c243b]">

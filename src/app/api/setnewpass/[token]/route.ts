@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     await db
       .update(user)
       .set({ password: hashSync(newpass.password, 10) })
-      .where(eq(user.emailResetPassword, token));
+      .where(eq(user.resetPasswordToken, token));
     return NextResponse.redirect(process.env.NEXTAUTH_URL + "/login", {
       status: 307,
     });
